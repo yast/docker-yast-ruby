@@ -29,8 +29,8 @@ if [ -e Makefile.cvs ]; then
   make -s check VERBOSE=1 Y2DIR=`pwd`
 fi
 
-# enable coveralls reports
-COVERAGE=1 CI=1 TRAVIS=1 rake test:unit
+# enable coverage reports
+COVERAGE=1 CI=1 rake test:unit
 
 # build the binary package locally, use plain "rpmbuild" to make it simple
 rake tarball > /dev/null 2>&1
