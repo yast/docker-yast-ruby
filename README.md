@@ -45,7 +45,7 @@ in Ruby.
 
 ## Using the image
 
-The image contains an `yast-travis` script which runs all the checks and tests.
+The image contains an `yast-travis-ruby` script which runs all the checks and tests.
 
 The workflow is:
 
@@ -53,5 +53,5 @@ The workflow is:
 - If the code needs additional packages install them using the `zypper install`
   command from the local `Dockerfile`. (If the package is need by more modules
   you can add it into the original Docker image.)
-- Run the `yast-travis` script.
+- Run the `yast-travis-ruby` script.
 
