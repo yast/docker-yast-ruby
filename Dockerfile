@@ -53,7 +53,7 @@ RUN zypper --gpg-auto-import-keys --non-interactive in --no-recommends \
   yast2-xml \
   yast2-ycp-ui-bindings \
   && zypper clean -a
-COPY yast-travis /usr/local/bin/
+COPY yast-travis-ruby /usr/local/bin/
 ENV LC_ALL=en_US.UTF-8
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
