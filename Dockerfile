@@ -55,7 +55,7 @@ RUN zypper --gpg-auto-import-keys --non-interactive in --no-recommends \
   && zypper clean -a
 COPY yast-travis /usr/local/bin/
 ENV LC_ALL=en_US.UTF-8
-RUN mkdir /tmp/sources
-WORKDIR /tmp/sources
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 # just a smoke test, make sure YaST works
 RUN yast2 proxy summary && rm -rf /var/log/YaST2/y2log
