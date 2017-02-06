@@ -22,6 +22,7 @@ RUN zypper --gpg-auto-import-keys --non-interactive in --no-recommends \
   'rubygem(suse-connect)' \
   'rubygem(yard)' \
   'rubygem(yast-rake)' \
+  obs-service-source_validator \
   yast2 \
   yast2-add-on \
   yast2-bootloader \
