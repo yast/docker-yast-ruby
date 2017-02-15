@@ -1,6 +1,15 @@
 FROM opensuse:tumbleweed
 RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Tumbleweed/ yast
+
+# we need to install Ruby first to define the %{rb_default_ruby_abi} RPM macro
+# see https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#run
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#/build-cache
+# why we need "zypper clean -a" at the end
 RUN zypper --gpg-auto-import-keys --non-interactive in --no-recommends \
+  ruby && zypper clean -a
+
+RUN RUBY_VERSION=`rpm --eval '%{rb_default_ruby_abi}'` && \
+  zypper --gpg-auto-import-keys --non-interactive in --no-recommends \
   aspell-en \
   fdupes \
   git \
@@ -10,18 +19,18 @@ RUN zypper --gpg-auto-import-keys --non-interactive in --no-recommends \
   which \
   libxml2-tools \
   libxslt-tools \
-  'rubygem(abstract_method)' \
-  'rubygem(cfa)' \
-  'rubygem(cheetah)' \
-  'rubygem(coveralls)' \
-  'rubygem(gettext)' \
-  'rubygem(raspell)' \
-  'rubygem(rspec)' \
-  'rubygem(rubocop)' \
-  'rubygem(simplecov)' \
-  'rubygem(suse-connect)' \
-  'rubygem(yard)' \
-  'rubygem(yast-rake)' \
+  "rubygem($RUBY_VERSION:abstract_method)" \
+  "rubygem($RUBY_VERSION:cfa)" \
+  "rubygem($RUBY_VERSION:cheetah)" \
+  "rubygem($RUBY_VERSION:coveralls)" \
+  "rubygem($RUBY_VERSION:gettext)" \
+  "rubygem($RUBY_VERSION:raspell)" \
+  "rubygem($RUBY_VERSION:rspec)" \
+  "rubygem($RUBY_VERSION:rubocop)" \
+  "rubygem($RUBY_VERSION:simplecov)" \
+  "rubygem($RUBY_VERSION:suse-connect)" \
+  "rubygem($RUBY_VERSION:yard)" \
+  "rubygem($RUBY_VERSION:yast-rake)" \
   obs-service-source_validator \
   yast2 \
   yast2-add-on \
@@ -58,5 +67,7 @@ COPY yast-travis-ruby /usr/local/bin/
 ENV LC_ALL=en_US.UTF-8
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-# just a smoke test, make sure YaST works
+# just some smoke tests, make sure YaST...
 RUN yast2 proxy summary && rm -rf /var/log/YaST2/y2log
+# ... and rake work properly
+RUN rake -r yast/rake -V
