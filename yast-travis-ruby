@@ -10,10 +10,8 @@ rake check:pot
 
 if [ -e .rubocop.yml ]; then
   rubocop
-else
-  # if rubocop is not used then at least check the syntax
-  rake check:syntax
 fi;
+# if rubocop is not used then rake package latter run syntax check
 
 if [ -e .spell.yml ]; then
   rake check:spelling
@@ -32,8 +30,8 @@ fi
 # enable coverage reports
 COVERAGE=1 CI=1 rake test:unit
 
-# build the binary package locally, use plain "rpmbuild" to make it simple
-rake tarball > /dev/null 2>&1
+# run package with all its checks, but be silent as possible. STDOUT is sent to dev null due to output of tar command
+rake --silent package > /dev/null
 
 if [ -d package ]; then
   # run the osc source validator to check the .spec and .changes locally
