@@ -68,6 +68,6 @@ ENV LC_ALL=en_US.UTF-8
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 # just some smoke tests, make sure YaST...
-RUN yast2 proxy summary && rm -rf /var/log/YaST2/y2log
+RUN TERM=xterm yast2 proxy summary && rm -rf /var/log/YaST2/y2log
 # ... and rake work properly
 RUN rake -r yast/rake -V
