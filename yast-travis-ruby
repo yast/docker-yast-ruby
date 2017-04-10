@@ -30,7 +30,7 @@ fi
 # enable coverage reports
 COVERAGE=1 CI=1 rake test:unit
 
-# run package with all its checks, but be silent as possible. 1 is sent to dev null due to output of tar command
+# run package with all its checks, but be silent as possible. STDOUT is sent to dev null due to output of tar command
 rake --silent package > /dev/null
 
 if [ -d package ]; then
