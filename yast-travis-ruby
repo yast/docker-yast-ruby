@@ -30,8 +30,8 @@ fi
 # enable coverage reports
 COVERAGE=1 CI=1 rake test:unit
 
-# build the binary package locally, use plain "rpmbuild" to make it simple
-rake package > /dev/null 2>&1
+# run package with all its checks, but be silent as possible. 1 is sent to dev null due to output of tar command
+rake --silent package > /dev/null
 
 if [ -d package ]; then
   # run the osc source validator to check the .spec and .changes locally
