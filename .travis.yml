@@ -7,7 +7,7 @@ script:
   # at least run a syntax check for the Travis script
   - bash -n yast-travis-ruby
   # build the Docker image
-  - docker build -t yast-test-image Dockerfile.$DOCKER_TAG
+  - docker build -t yast-test-image -f Dockerfile.$DOCKER_TAG .
 
 env:
   # define the build matrix to build all images in parallel
