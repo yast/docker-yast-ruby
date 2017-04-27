@@ -63,11 +63,11 @@ RUN RUBY_VERSION=`rpm --eval '%{rb_default_ruby_abi}'` && \
   yast2-xml \
   yast2-ycp-ui-bindings \
   && zypper clean -a
+
 COPY yast-travis-ruby /usr/local/bin/
 ENV LC_ALL=en_US.UTF-8
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-# just some smoke tests, make sure YaST...
-RUN TERM=xterm yast2 proxy summary && rm -rf /var/log/YaST2/y2log
-# ... and rake work properly
-RUN rake -r yast/rake -V
+
+# just some smoke tests, make sure rake and YaST work properly
+RUN rake -r yast/rake -V && TERM=xterm yast2 proxy summary && rm -rf /var/log/YaST2/y2log
