@@ -7,14 +7,33 @@ for running the CI tests at [Travis](https://travis-ci.org/).
 The built image is available at the [yastdevel/ruby](
 https://hub.docker.com/r/yastdevel/ruby/) Docker repository.
 
+## Docker Tags
+
+This repository builds several versions of the image which are published
+by the Docker Hub with a different tag.
+
+The images are defined in the `Dockerfile.<tag>` files and published as
+`yastdevel/ruby:<tag>` at the Docker Hub. See the complete [list of tags](
+https://hub.docker.com/r/yastdevel/ruby/tags/) at the Docker Hub.
+
+#### Adding New Versions
+
+When adding a new version of the image:
+
+- Create the respective `Dockerfile.<tag>` file
+- Update the `.travis.yml` file so the image is built also at Travis
+- Update the [Docker Hub build setting](
+  https://hub.docker.com/r/yastdevel/ruby/~/settings/automated-builds/) to
+  build and publish the new image
+
 ## Automatic Rebuilds
 
-- The image is rebuilt whenever a commit it pushed to the `master` branch.
+- The images are rebuilt whenever a commit it pushed to the `master` branch.
   This is implemented via GitHub webhooks.
 
-- Additionally the image is periodically rebuilt to ensure the latest YaST
-  packages from the [YaST:Head](https://build.opensuse.org/project/show/YaST:Head)
-  OBS project are used even when the image configuration has not been changed.
+- Additionally the images are periodically rebuilt to ensure the latest YaST
+  packages from the respective  OBS project are used even when the image
+  configuration has not been changed.
   The build is triggered by the [docker-trigger-yastdevel-ruby](
   https://ci.opensuse.org/view/Yast/job/docker-trigger-yastdevel-ruby/)
   Jenkins job.
