@@ -1,5 +1,6 @@
 FROM opensuse:42.2
-RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/SLE-12:/SP2/SLE_12_SP2/ yast_sle_12_sp2
+RUN zypper ar -f -p 95 http://download.opensuse.org/repositories/YaST:/SLE-12:/SP2/SLE_12_SP2/ \
+  yast_sle12_sp2
 
 # we need to install Ruby first to define the %{rb_default_ruby_abi} RPM macro
 # see https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#run
