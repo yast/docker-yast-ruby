@@ -28,6 +28,7 @@ RUN RUBY_VERSION=`rpm --eval '%{rb_default_ruby_abi}'` && \
   "rubygem($RUBY_VERSION:cheetah)" \
   "rubygem($RUBY_VERSION:coveralls)" \
   "rubygem($RUBY_VERSION:gettext)" \
+  "rubygem($RUBY_VERSION:parallel)" \
   "rubygem($RUBY_VERSION:raspell)" \
   "rubygem($RUBY_VERSION:rspec)" \
   "rubygem($RUBY_VERSION:rubocop)" \
