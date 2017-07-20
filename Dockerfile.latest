@@ -78,6 +78,8 @@ ENV LC_ALL=en_US.UTF-8
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+# FIXME: temporary workaround to make Ruby 2.4 default
+RUN cp -a /usr/bin/ruby.ruby2.4 /usr/bin/ruby
+
 # just some smoke tests, make sure rake and YaST work properly
-# FIXME: disabled yast test: TERM=xterm yast2 proxy summary  && rm -rf /var/log/YaST2/y2log
-RUN rake -r yast/rake -V
+RUN rake -r yast/rake -V && TERM=xterm yast2 proxy summary && rm -rf /var/log/YaST2/y2log
