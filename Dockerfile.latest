@@ -79,4 +79,5 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # just some smoke tests, make sure rake and YaST work properly
-RUN rake -r yast/rake -V && TERM=xterm yast2 proxy summary && rm -rf /var/log/YaST2/y2log
+# FIXME: disabled yast test: TERM=xterm yast2 proxy summary  && rm -rf /var/log/YaST2/y2log
+RUN rake -r yast/rake -V
