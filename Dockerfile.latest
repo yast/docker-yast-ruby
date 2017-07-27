@@ -1,7 +1,5 @@
 FROM opensuse:tumbleweed
-# FIXME: use Factory target for now as a Ruby 2.4 workaround,
-# switch back to openSUSE_Tumbleweed later
-RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Factory/ yast
+RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Tumbleweed/ yast
 
 # "zypper dup" synchronizes with the current Tumbleweed (even downgrades if needed)
 RUN zypper --gpg-auto-import-keys --non-interactive dup --no-recommends \
@@ -11,12 +9,10 @@ RUN zypper --gpg-auto-import-keys --non-interactive dup --no-recommends \
 # see https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#run
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#/build-cache
 # why we need "zypper clean -a" at the end
-## FIXME: remove the ruby2.4 workaround (replace by pure "ruby")
 RUN zypper --gpg-auto-import-keys --non-interactive in --no-recommends \
-  ruby2.4 && zypper clean -a
+  ruby && zypper clean -a
 
-## FIXME: remove the 2.4 workaround, use RUBY_VERSION=`rpm --eval '%{rb_default_ruby_abi}'`
-RUN RUBY_VERSION=ruby:2.4.0 && \
+RUN RUBY_VERSION=`rpm --eval '%{rb_default_ruby_abi}'` && \
   zypper --gpg-auto-import-keys --non-interactive in --no-recommends \
   aspell-en \
   fdupes \
@@ -77,9 +73,6 @@ COPY yast-travis-ruby /usr/local/bin/
 ENV LC_ALL=en_US.UTF-8
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-
-# FIXME: temporary workaround to make Ruby 2.4 default
-RUN cp -a /usr/bin/ruby.ruby2.4 /usr/bin/ruby
 
 # just some smoke tests, make sure rake and YaST work properly
 RUN rake -r yast/rake -V && TERM=xterm yast2 proxy summary && rm -rf /var/log/YaST2/y2log
