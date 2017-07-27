@@ -1,7 +1,5 @@
 FROM opensuse:tumbleweed
-# FIXME: use Factory target for now as a Ruby 2.4 workaround,
-# switch back to openSUSE_Tumbleweed later
-RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Factory/ yast
+RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Tumbleweed/ yast
 
 # "zypper dup" synchronizes with the current Tumbleweed (even downgrades if needed)
 RUN zypper --gpg-auto-import-keys --non-interactive dup --no-recommends \
