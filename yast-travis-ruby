@@ -17,7 +17,10 @@ if [ -e .spell.yml ]; then
   rake check:spelling
 fi
 
-yardoc
+# run yardoc when there is at least one Ruby file
+if [ ! -z `find . -name '*.rb' -print -quit` ]; then
+  yardoc
+fi
 
 # autotools based package
 if [ -e Makefile.cvs ]; then
