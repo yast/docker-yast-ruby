@@ -61,7 +61,7 @@ RUN RUBY_VERSION=`rpm --eval '%{rb_default_ruby_abi}'` && \
   yast2-security \
   yast2-services-manager \
   yast2-slp \
-  yast2-storage \
+  yast2-storage-ng \
   yast2-testsuite \
   yast2-transfer \
   yast2-update \
