@@ -36,6 +36,7 @@ RUN RUBY_VERSION=`rpm --eval '%{rb_default_ruby_abi}'` && \
   "rubygem($RUBY_VERSION:suse-connect)" \
   "rubygem($RUBY_VERSION:yard)" \
   "rubygem($RUBY_VERSION:yast-rake)" \
+  build \
   obs-service-source_validator \
   patterns-rpm-macros \
   yast2 \
