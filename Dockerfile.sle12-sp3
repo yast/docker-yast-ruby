@@ -15,7 +15,7 @@ RUN zypper --non-interactive in --no-recommends curl ruby && zypper clean -a
 RUN rpm --import https://build.opensuse.org/projects/YaST/public_key
 
 # Set a higher priority for the yast_sle_12_sp3 repo to prefer the packages from
-# this repo even if they have a lower version than the original 42.2 packages.
+# this repo even if they have a lower version than the original 42.3 packages.
 RUN zypper ar -f -p 95 https://download.opensuse.org/repositories/YaST:/SLE-12:/SP3/openSUSE_Leap_42.3/ \
   yast_sle12_sp3
 
