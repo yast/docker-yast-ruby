@@ -72,5 +72,6 @@ The workflow is:
 - If the code needs additional packages install them using the `zypper install`
   command from the local `Dockerfile`. (If the package is need by more modules
   you can add it into the original Docker image.)
-- Run the `yast-travis-ruby` script.
+- Run the `yast-travis-ruby` script. (Optionally you can use the `-x` and `-o`
+  options to split the work into several smaller tasks and run them in parallel.)
 
