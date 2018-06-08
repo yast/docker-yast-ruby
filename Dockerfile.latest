@@ -35,6 +35,7 @@ RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   "rubygem($RUBY_VERSION:coveralls)" \
   "rubygem($RUBY_VERSION:gettext)" \
   "rubygem($RUBY_VERSION:parallel)" \
+  "rubygem($RUBY_VERSION:parallel_tests)" \
   "rubygem($RUBY_VERSION:raspell)" \
   "rubygem($RUBY_VERSION:rspec)" \
   "rubygem($RUBY_VERSION:rubocop)" \
