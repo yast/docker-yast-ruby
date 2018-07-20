@@ -171,6 +171,16 @@ function dump_settings() {
   echo
 }
 
+# run parallel rubocop if it is available,
+# otherwise fallback to standard rubocop call
+function run_rubocop() {
+  if rake -T | grep -q "^rake check:rubocop"; then
+    rake check:rubocop
+  else
+    rubocop
+  fi
+}
+
 # initializa the defaults and parse the command line options
 
 set_defaults
@@ -211,7 +221,7 @@ fi
 [ "$RUN_CHECK_POT" == "1" ] && rake check:pot
 
 # if rubocop is not used then rake package later runs a syntax check at least
-[ "$RUN_RUBOCOP" == "1" ] && rubocop
+[ "$RUN_RUBOCOP" == "1" ] && run_rubocop
 
 [ "$RUN_CHECK_SPELLING" == "1" ] && rake check:spelling
 
