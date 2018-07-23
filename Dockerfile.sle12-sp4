@@ -43,6 +43,7 @@ RUN RUBY_VERSION=`rpm --eval '%{rb_default_ruby_abi}'` && \
   "rubygem($RUBY_VERSION:rspec)" \
   "rubygem($RUBY_VERSION:rubocop)" \
   "rubygem($RUBY_VERSION:simplecov)" \
+  "rubygem($RUBY_VERSION:simpleidn)" \
   "rubygem($RUBY_VERSION:suse-connect)" \
   "rubygem($RUBY_VERSION:yard)" \
   "rubygem($RUBY_VERSION:yast-rake)" \
