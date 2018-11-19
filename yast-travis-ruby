@@ -19,11 +19,11 @@ function usage() {
   echo "Usage: $0 [OPTIONS]"
   echo
   echo "OPTIONS:"
-  echo -e "\t -x <step> \t exclude the specified step"
-  echo -e "\t -o <step> \t run only the specified step"
-  echo -e "\t -y        \t run \"rake check:doc\" (more strict) in the \"yardoc\" step"
-  echo -e "\t -d        \t enable debug mode"
-  echo -e "\t -h        \t print this help"
+  echo -e "\\t -x <step> \\t exclude the specified step"
+  echo -e "\\t -o <step> \\t run only the specified step"
+  echo -e "\\t -y        \\t run \"rake check:doc\" (more strict) in the \"yardoc\" step"
+  echo -e "\\t -d        \\t enable debug mode"
+  echo -e "\\t -h        \\t print this help"
   echo
   echo "The known steps are: $ALL_STEPS"
   echo
@@ -67,7 +67,7 @@ function set_defaults() {
   fi
 
   # run yardoc when there is at least one Ruby file
-  if [ ! -z `find . -name '*.rb' -print -quit` ]; then
+  if [ -n "$(find . -name '*.rb' -print -quit)" ]; then
     RUN_CHECK_YARDOC=1
   else
     RUN_CHECK_YARDOC=0
@@ -188,10 +188,10 @@ set_defaults
 while getopts ":x:o:dhy" arg; do
   case $arg in
     x)
-      exclude $OPTARG
+      exclude "$OPTARG"
       ;;
     o)
-      run_only $OPTARG
+      run_only "$OPTARG"
       ;;
     h)
       usage
@@ -241,7 +241,7 @@ if [ -e Makefile.cvs ]; then
     make -s install
   fi
 
-  [ "$RUN_TESTS" == "1" ] && make -s check VERBOSE=1 Y2DIR=`pwd`
+  [ "$RUN_TESTS" == "1" ] && make -s check VERBOSE=1 Y2DIR="$(pwd)"
 fi
 
 # enable coverage reports
@@ -279,4 +279,5 @@ rpmbuild -bb --nocheck package/*.spec || rpmbuild -bb --nocheck --nodeps package
 rpm -iv --force --nodeps $PKG_DIR/RPMS/*/*.rpm
 rpm -Uv --force --nodeps $PKG_DIR/RPMS/*/*.rpm
 # get the plain package names and remove all packages at once
-rpm -ev --nodeps `rpm -q --qf '%{NAME} ' -p $PKG_DIR/RPMS/*/*.rpm`
+mapfile -t packages < <(rpm -q --qf '%{NAME} ' -p $PKG_DIR/RPMS/*/*.rpm)
+rpm -ev --nodeps "${packages[@]}"
