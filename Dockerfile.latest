@@ -21,6 +21,8 @@ RUN zypper ar -p 50 -f https://download.opensuse.org/repositories/YaST:/Head/ope
 
 RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   zypper --non-interactive in --no-recommends \
+  brp-check-suse \
+  brp-extract-appdata \
   aspell-en \
   fdupes \
   git \
