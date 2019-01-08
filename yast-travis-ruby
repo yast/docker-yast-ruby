@@ -75,7 +75,7 @@ function set_defaults() {
   fi
 
   # run the perl syntax check by default when there is at least one Perl file
-  if [ -n "$(find . \( -name '*.pm' -o -name '*.pl' \) -print -quit)" ]; then
+  if [ -n "$(find . -name '*.p[ml]' -print -quit)" ]; then
     RUN_CHECK_PERL=1
   else
     RUN_CHECK_PERL=0
@@ -201,7 +201,7 @@ function check_perl() {
   # Perl allows checking the syntax only for one file at once, we need to use -n1
   # xargs option, to speed it up run the checks in parallel (-P option).
   # If you need to specify an additional search path use the PERL5LIB environment variable.
-  find . \( -name '*.pm' -o -name '*.pl' \) -print0 \
+  find . -name '*.p[ml]' -print0 \
     | xargs -0 -P"$(nproc)" -n1 perl -I src/modules -I /usr/share/YaST2/modules -w -c
 }
 
