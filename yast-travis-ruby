@@ -7,7 +7,7 @@
 set -e
 
 # all known steps in this script
-ALL_STEPS="pot, rubocop, spelling, yardoc, build, tests, package"
+ALL_STEPS="pot, rubocop, spelling, yardoc, build, tests, package, perl_syntax"
 
 # when adding a new step
 # 1) add it to $ALL_STEPS
@@ -45,6 +45,7 @@ function disable_all() {
     RUN_BUILD=0
     RUN_TESTS=0
     RUN_BUILD_PACKAGE=0
+    RUN_CHECK_PERL=0
 
     DISABLE_ALL=1
   fi
@@ -71,6 +72,13 @@ function set_defaults() {
     RUN_CHECK_YARDOC=1
   else
     RUN_CHECK_YARDOC=0
+  fi
+
+  # run the perl syntax check by default when there is at least one Perl file
+  if [ -n "$(find . -name '*.p[ml]' -print -quit)" ]; then
+    RUN_CHECK_PERL=1
+  else
+    RUN_CHECK_PERL=0
   fi
 
   # we need to build only the autotools based packages
@@ -112,6 +120,9 @@ function exclude() {
     package)
       RUN_BUILD_PACKAGE=0
       ;;
+    perl_syntax)
+      RUN_CHECK_PERL=0
+      ;;
     *)
       echo "ERROR: Unknown step: '$1'"
       echo "Known steps: $ALL_STEPS"
@@ -151,6 +162,9 @@ function run_only() {
     package)
       RUN_BUILD_PACKAGE=1
       ;;
+    perl_syntax)
+      RUN_CHECK_PERL=1
+      ;;
     *)
       echo "ERROR: Unknown step: '$1'"
       echo "Known steps: $ALL_STEPS"
@@ -165,6 +179,7 @@ function dump_settings() {
   echo "RUN_RUBOCOP: $RUN_RUBOCOP"
   echo "RUN_CHECK_SPELLING: $RUN_CHECK_SPELLING"
   echo "RUN_CHECK_YARDOC: $RUN_CHECK_YARDOC"
+  echo "RUN_CHECK_PERL: $RUN_CHECK_PERL"
   echo "RUN_BUILD: $RUN_BUILD"
   echo "RUN_TESTS: $RUN_TESTS"
   echo "RUN_BUILD_PACKAGE: $RUN_BUILD_PACKAGE"
@@ -179,6 +194,15 @@ function run_rubocop() {
   else
     rubocop
   fi
+}
+
+# check the syntax of the perl files
+function check_perl() {
+  # Perl allows checking the syntax only for one file at once, we need to use -n1
+  # xargs option, to speed it up run the checks in parallel (-P option).
+  # If you need to specify an additional search path use the PERL5LIB environment variable.
+  find . -name '*.p[ml]' -print0 \
+    | xargs -0 -P"$(nproc)" -n1 perl -I src/modules -I /usr/share/YaST2/modules -w -c
 }
 
 # initializa the defaults and parse the command line options
@@ -222,6 +246,9 @@ fi
 
 # if rubocop is not used then rake package later runs a syntax check at least
 [ "$RUN_RUBOCOP" == "1" ] && run_rubocop
+
+# run syntax check for the perl files
+[ "$RUN_CHECK_PERL" == "1" ] && check_perl
 
 [ "$RUN_CHECK_SPELLING" == "1" ] && rake check:spelling
 
