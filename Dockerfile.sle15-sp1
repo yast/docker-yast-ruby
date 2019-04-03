@@ -25,6 +25,8 @@ RUN zypper ar -f -p 95 https://download.opensuse.org/repositories/YaST:/SLE-15:/
 RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   zypper --non-interactive in --no-recommends --force-resolution \
   aspell-en \
+  brp-check-suse \
+  brp-extract-appdata \
   fdupes \
   git \
   rpm-build \
@@ -38,6 +40,7 @@ RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   "rubygem($RUBY_VERSION:coveralls)" \
   "rubygem($RUBY_VERSION:gettext)" \
   "rubygem($RUBY_VERSION:parallel)" \
+  "rubygem($RUBY_VERSION:parallel_tests)" \
   "rubygem($RUBY_VERSION:raspell)" \
   "rubygem($RUBY_VERSION:rspec)" \
   "rubygem($RUBY_VERSION:rubocop)" \
@@ -49,6 +52,7 @@ RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   build \
   obs-service-source_validator \
   patterns-rpm-macros \
+  ShellCheck \
   yast2 \
   yast2-add-on \
   yast2-bootloader \
