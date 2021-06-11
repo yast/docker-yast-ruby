@@ -1,6 +1,7 @@
 # The YaST Ruby Testing Image
 
-[![Build Status](https://travis-ci.org/yast/docker-yast-ruby.svg?branch=master)](https://travis-ci.org/yast/docker-yast-ruby)
+[![CI](https://github.com/yast/docker-yast-ruby/actions/workflows/ci.yml/badge.svg)](
+https://github.com/yast/docker-yast-ruby/actions/workflows/ci.yml)
 
 This repository builds a [Docker](https://www.docker.com/) image which is used
 for running the CI tests at [Travis](https://travis-ci.org/).
