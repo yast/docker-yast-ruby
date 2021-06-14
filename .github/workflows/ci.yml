@@ -15,7 +15,8 @@ jobs:
           - sle12-sp3
           - sle12-sp4
           - sle12-sp5
-          - sle15
+          # Disabled, unfortunately zypper segfaults in this build :-(
+          # - sle15
           - sle15-sp1
 
     steps:
